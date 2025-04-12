@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页金句卡片生成器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>网页金句卡片生成器</h1>
+    
+    <!-- 文本输入区域 -->
+    <div class="section">
+      <h2>输入文本</h2>
+      <textarea id="text-input" placeholder="在此粘贴或输入您想要制作成卡片的文字..."></textarea>
+    </div>
+    
+    <!-- 样式选择区域 -->
+    <div class="section">
+      <h2>选择样式</h2>
+      
+      <!-- 模板选择 -->
+      <div class="style-option">
+        <label>卡片模板：</label>
+        <div class="template-selector">
+          <div class="template-option" data-template="simple">
+            <div class="template-preview simple-preview"></div>
+            <span>简约</span>
+          </div>
+          <div class="template-option" data-template="literary">
+            <div class="template-preview literary-preview"></div>
+            <span>文艺</span>
+          </div>
+          <div class="template-option" data-template="business">
+            <div class="template-preview business-preview"></div>
+            <span>商务</span>
+          </div>
+          <div class="template-option" data-template="colorful">
+            <div class="template-preview colorful-preview"></div>
+            <span>多彩</span>
+          </div>
+          <div class="template-option" data-template="dark">
+            <div class="template-preview dark-preview"></div>
+            <span>暗黑</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 背景颜色选择 -->
+      <div class="style-option">
+        <label>背景颜色：</label>
+        <input type="color" id="bg-color" value="#ffffff">
+        <select id="gradient-select">
+          <option value="none">无渐变</option>
+          <option value="gradient1">渐变1 (蓝紫)</option>
+          <option value="gradient2">渐变2 (粉橙)</option>
+          <option value="gradient3">渐变3 (绿青)</option>
+        </select>
+      </div>
+      
+      <!-- 字体设置 -->
+      <div class="style-option">
+        <label>字体：</label>
+        <select id="font-family">
+          <option value="SimSun, serif">宋体</option>
+          <option value="Microsoft YaHei, sans-serif">微软雅黑</option>
+          <option value="KaiTi, serif">楷体</option>
+          <option value="SimHei, sans-serif">黑体</option>
+          <option value="Arial, sans-serif">Arial</option>
+        </select>
+        
+        <label>字体大小：</label>
+        <input type="range" id="font-size" min="12" max="36" value="18">
+        <span id="font-size-value">18px</span>
+        
+        <label>字体颜色：</label>
+        <input type="color" id="font-color" value="#000000">
+      </div>
+      
+      <!-- 来源信息 -->
+      <div class="style-option">
+        <label>
+          <input type="checkbox" id="show-source">
+          显示来源信息
+        </label>
+        <input type="text" id="source-text" placeholder="输入来源信息（如：作者、书名、网站等）" disabled>
+      </div>
+    </div>
+    
+    <!-- 预览区域 -->
+    <div class="section">
+      <h2>预览</h2>
+      <div id="preview-container">
+        <div id="card-preview">
+          <div id="preview-text"></div>
+          <div id="preview-source"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 导出区域 -->
+    <div class="section">
+      <h2>导出</h2>
+      <div class="export-options">
+        <div class="export-option">
+          <label>格式：</label>
+          <select id="export-format">
+            <option value="png">PNG</option>
+            <option value="jpg">JPG</option>
+          </select>
+        </div>
+        <div class="export-option">
+          <label>分辨率：</label>
+          <select id="export-resolution">
+            <option value="standard">标准</option>
+            <option value="hd">高清</option>
+          </select>
+        </div>
+      </div>
+      <button id="export-btn" class="primary-btn">导出图片</button>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

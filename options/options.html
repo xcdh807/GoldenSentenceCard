@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页金句卡片生成器 - 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>网页金句卡片生成器 - 设置</h1>
+    
+    <div class="section">
+      <h2>默认样式设置</h2>
+      
+      <!-- 默认模板 -->
+      <div class="option-group">
+        <label>默认卡片模板：</label>
+        <select id="default-template">
+          <option value="simple">简约</option>
+          <option value="literary">文艺</option>
+          <option value="business">商务</option>
+          <option value="colorful">多彩</option>
+          <option value="dark">暗黑</option>
+        </select>
+      </div>
+      
+      <!-- 默认背景颜色 -->
+      <div class="option-group">
+        <label>默认背景颜色：</label>
+        <input type="color" id="default-bg-color" value="#ffffff">
+      </div>
+      
+      <!-- 默认字体 -->
+      <div class="option-group">
+        <label>默认字体：</label>
+        <select id="default-font-family">
+          <option value="SimSun, serif">宋体</option>
+          <option value="Microsoft YaHei, sans-serif">微软雅黑</option>
+          <option value="KaiTi, serif">楷体</option>
+          <option value="SimHei, sans-serif">黑体</option>
+          <option value="Arial, sans-serif">Arial</option>
+        </select>
+      </div>
+      
+      <!-- 默认字体大小 -->
+      <div class="option-group">
+        <label>默认字体大小：</label>
+        <input type="range" id="default-font-size" min="12" max="36" value="18">
+        <span id="font-size-value">18px</span>
+      </div>
+      
+      <!-- 默认字体颜色 -->
+      <div class="option-group">
+        <label>默认字体颜色：</label>
+        <input type="color" id="default-font-color" value="#000000">
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>导出设置</h2>
+      
+      <!-- 默认导出格式 -->
+      <div class="option-group">
+        <label>默认导出格式：</label>
+        <select id="default-export-format">
+          <option value="png">PNG</option>
+          <option value="jpg">JPG</option>
+        </select>
+      </div>
+      
+      <!-- 默认导出分辨率 -->
+      <div class="option-group">
+        <label>默认导出分辨率：</label>
+        <select id="default-export-resolution">
+          <option value="standard">标准</option>
+          <option value="hd">高清</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>来源信息设置</h2>
+      
+      <!-- 自动添加来源信息 -->
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="auto-add-source">
+          默认显示来源信息
+        </label>
+      </div>
+      
+      <!-- 默认来源信息模板 -->
+      <div class="option-group">
+        <label>默认来源信息模板：</label>
+        <input type="text" id="default-source-template" placeholder="例如：摘自《书名》">
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button id="save-btn" class="primary-btn">保存设置</button>
+      <button id="reset-btn" class="secondary-btn">恢复默认</button>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>
