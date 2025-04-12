@@ -68,3 +68,29 @@
 ### 从Chrome Web Store安装
 1. 访问Chrome Web Store
 2. 搜索"网页金句卡片生成器
+
+## 环境变量配置
+
+本项目使用环境变量来存储敏感信息，如API密钥。以下是配置步骤：
+
+### 本地开发环境
+
+1. 复制`.env.example`文件并重命名为`.env`
+2. 在`.env`文件中填入您的DeepSeek API密钥和其他配置
+
+```
+DEEPSEEK_API_KEY=your_api_key_here
+DEEPSEEK_API_URL=https://ark.cn-beijing.volces.com/api/v3/chat/completions
+PORT=3000
+```
+
+### Vercel部署配置
+
+在Vercel部署时，需要在项目设置中添加以下环境变量：
+
+1. 登录Vercel账户并进入您的项目
+2. 点击「Settings」→「Environment Variables」
+3. 添加以下环境变量：
+   - `DEEPSEEK_API_KEY`: 您的DeepSeek API密钥
+   - `DEEPSEEK_API_URL`: DeepSeek API的URL地址
+   - `PORT`: 服务器端口（Vercel会自动分配端口，可选）

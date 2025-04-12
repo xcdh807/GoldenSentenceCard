@@ -7,10 +7,17 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 
+// 导入dotenv包（如果可用）
+try {
+  require('dotenv').config();
+} catch (error) {
+  console.log('dotenv未安装，将仅使用环境变量');
+}
+
 // 配置信息
-const PORT = 3000;
-const API_KEY = 'ba747ed2-bd0a-4dc6-93ab-38a8564ab22a';
-const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
+const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.DEEPSEEK_API_KEY;
+const API_URL = process.env.DEEPSEEK_API_URL || 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
 
 
 // 创建HTTP服务器
