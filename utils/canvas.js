@@ -25,8 +25,23 @@ export function createCardImage(options) {
   
   // 设置Canvas尺寸
   const scale = options.resolution === 'hd' ? 2 : 1;
-  const width = 240 * scale;
-  const height = 320 * scale;
+  const baseWidth = 240 * scale;
+  const baseHeight = 320 * scale;
+  
+  // 临时设置字体以计算文本尺寸
+  ctx.font = `${parseInt(options.fontSize) * scale}px ${options.fontFamily}`;
+  
+  // 计算文本需要的尺寸
+  const maxWidth = baseWidth - 40 * scale;
+  const lines = getTextLines(ctx, options.text, maxWidth);
+  const lineHeight = parseInt(options.fontSize) * 1.5 * scale;
+  const textHeight = lines.length * lineHeight;
+  
+  // 根据文本内容调整画布高度
+  const minTextSpace = 120 * scale; // 文本最小占用空间
+  const requiredTextSpace = Math.max(minTextSpace, textHeight + 40 * scale);
+  const height = baseHeight + Math.max(0, requiredTextSpace - minTextSpace);
+  const width = baseWidth;
   
   canvas.width = width;
   canvas.height = height;
@@ -111,12 +126,14 @@ function drawText(ctx, width, height, text, fontFamily, fontSize, fontColor, sca
   const textHeight = lines.length * lineHeight;
   
   // 绘制每一行文本
-  let y = (height - textHeight) / 2;
+  // 顶部留出80px的空间
+  let y = 80 * scale;
   lines.forEach(line => {
     ctx.fillText(line, width / 2, y + lineHeight / 2);
     y += lineHeight;
   });
 }
+
 
 /**
  * 绘制来源信息
@@ -133,6 +150,7 @@ function drawSource(ctx, width, height, source, fontFamily, fontColor, scale) {
   ctx.font = `${12 * scale}px ${fontFamily}`;
   ctx.fillStyle = fontColor;
   ctx.textAlign = 'right';
+  // 确保来源信息始终显示在底部
   ctx.fillText(sourceText, width - 20 * scale, height - 20 * scale);
 }
 

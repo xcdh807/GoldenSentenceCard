@@ -20,6 +20,8 @@ const exportFormat = document.getElementById('export-format');
 const exportResolution = document.getElementById('export-resolution');
 const exportBtn = document.getElementById('export-btn');
 const templateOptions = document.querySelectorAll('.template-option');
+const aiSummaryBtn = document.getElementById('ai-summary-btn');
+const summaryLoading = document.getElementById('summary-loading');
 
 // 当前选中的模板
 let currentTemplate = 'simple';
@@ -72,6 +74,9 @@ function bindEventListeners() {
   
   // 导出按钮事件
   exportBtn.addEventListener('click', exportCard);
+  
+  // AI总结按钮事件
+  aiSummaryBtn.addEventListener('click', generateAISummary);
 }
 
 // 设置模板
@@ -314,6 +319,88 @@ function loadSettings() {
       // 设置模板
       setTemplate(currentTemplate);
     }
+  });
+}
+
+/**
+ * 生成AI总结
+ * 调用DeepSeek API生成文本总结
+ */
+function generateAISummary() {
+  const text = textInput.value.trim();
+  
+  // 检查文本是否为空
+  if (!text) {
+    alert('请先输入或粘贴文本内容');
+    return;
+  }
+  
+  // 显示加载动画
+  aiSummaryBtn.disabled = true;
+  summaryLoading.style.display = 'block';
+  
+  // 调用本地代理服务器
+  fetch('http://localhost:3000/summarize', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text })
+  })
+  .then(response => {
+    // 检查响应是否成功
+    if (!response.ok) {
+      throw new Error('网络响应不正常');
+    }
+    
+    // 处理流式响应
+    const reader = response.body.getReader();
+    let decoder = new TextDecoder();
+    let summary = '';
+    
+    // 读取流数据
+    function readStream() {
+      return reader.read().then(({ done, value }) => {
+        if (done) {
+          // 流结束，更新输入框
+          textInput.value = summary.trim();
+          updatePreview();
+          return;
+        }
+        
+        // 解析数据块
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+        
+        // 处理每一行数据
+        lines.forEach(line => {
+          if (line.startsWith('data:') && !line.includes('[DONE]')) {
+            try {
+              const data = JSON.parse(line.substring(5).trim());
+              if (data.choices && data.choices[0].delta && data.choices[0].delta.content) {
+                summary += data.choices[0].delta.content;
+              }
+            } catch (e) {
+              // 忽略解析错误
+            }
+          }
+        });
+        
+        // 继续读取流
+        return readStream();
+      });
+    }
+    
+    return readStream();
+  })
+  .catch(error => {
+    console.error('获取AI总结时出错:', error);
+    alert('获取AI总结失败，请确保本地服务器已启动');
+  })
+  .finally(() => {
+    // 隐藏加载动画
+    aiSummaryBtn.disabled = false;
+    summaryLoading.style.display = 'none';
   });
 }
 
